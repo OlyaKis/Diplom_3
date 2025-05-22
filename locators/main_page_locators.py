@@ -6,7 +6,7 @@ class MainPageLocators:
     INGREDIENT_ITEM = (By.XPATH, "//a[contains(@class, 'BurgerIngredient_ingredient')]")
     INGREDIENT_DETAILS_MODAL = (By.XPATH, "//section[contains(@class, 'Modal_modal')]")
     CLOSE_MODAL_BUTTON = (By.XPATH, "//button[contains(@class, 'Modal_modal__close')]")
-    INGREDIENT_COUNTER = (By.XPATH, "//*[@id='root']/div/main/section[1]/div[2]/ul[1]/a[1]/div[1]")
+    INGREDIENT_COUNTER = (By.XPATH, "(//div[contains(@class, 'counter_counter__') and contains(@class, 'counter_default__')])[1]")
     ORDER_BUTTON = (By.XPATH, "//button[text()='Оформить заказ']")
     BUNS_TAB = (By.XPATH, "//span[text()='Булки']")
     BUN_ITEM = (By.XPATH, "//a[contains(@class, 'BurgerIngredient_ingredient')][.//img[contains(@alt, 'булка')]]")

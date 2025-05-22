@@ -2,7 +2,7 @@ from selenium.webdriver.common.by import By
 
 
 class FeedLocators:
-    ORDER_ITEM = (By.XPATH, "//li[1]//a[1]//div[2]")
+    ORDER_ITEM = (By.XPATH, "(//li[contains(@class, 'OrderHistory_listItem__')])[1]")
     ORDER_MODAL = (By.XPATH, "//div[@class='Modal_orderBox__1xWdi Modal_modal__contentBox__sCy8X p-10']")
     TOTAL_DONE_ALL_TIME = (By.CSS_SELECTOR, "p.OrderFeed_number__2MbrQ")
     TOTAL_DONE_TODAY = (By.XPATH, "//p[contains(text(),'Выполнено за сегодня')]/following-sibling::p")

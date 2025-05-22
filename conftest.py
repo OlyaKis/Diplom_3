@@ -2,6 +2,9 @@ import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.firefox.service import Service as FirefoxService
+from utils.api_helper import create_test_user, delete_test_user
+from utils.test_data import TestUser
+from pages.login_page import LoginPage
 import os
 
 
@@ -29,3 +32,19 @@ def driver(request):
         raise ValueError(f"Browser '{browser}' is not supported")
     yield driver
     driver.quit()
+
+
+@pytest.fixture(scope="function")
+def test_user():
+    user = TestUser.generate()
+    create_test_user(user)
+    yield user
+    delete_test_user(user)
+
+
+@pytest.fixture(scope="function")
+def login_user(driver, test_user):
+    login_page = LoginPage(driver)
+    login_page.open()
+    login_page.login(test_user.email, test_user.password)
+    return test_user
