@@ -1,0 +1,1 @@
+{"name": "Счётчик ингредиента увеличивается при добавлении", "status": "skipped", "start": 1747775616171, "stop": 1747775616171, "uuid": "4414f882-7564-4694-b0bb-c67f6487688e", "testCaseId": "390e409e07873ff831e8f2b624bd9238", "fullName": "tests.test_order.TestOrder#test_ingredient_counter_increases"}
