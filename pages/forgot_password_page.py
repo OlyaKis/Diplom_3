@@ -12,5 +12,6 @@ class ForgotPasswordPage(BasePage):
     def submit_reset(self):
         self.click(ForgotPasswordLocators.RESET_BUTTON)
 
+    @allure.step("Проверяем, что открыта страница восстановления пароля")
     def is_reset_page_opened(self):
         return "forgot-password" in self.get_current_url()

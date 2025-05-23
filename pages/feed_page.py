@@ -7,7 +7,7 @@ class FeedPage(BasePage):
 
     @allure.step("Открываем страницу 'Лента заказов'")
     def open(self):
-        self.driver.get("https://stellarburgers.nomoreparties.site/feed")
+        self.go("https://stellarburgers.nomoreparties.site/feed")
 
     @allure.step("Кликаем по первому заказу в ленте")
     def click_first_order(self, timeout=10):
@@ -47,4 +47,4 @@ class FeedPage(BasePage):
 
     @allure.step("Обновляем страницу")
     def refresh(self):
-        self.driver.refresh()
+        super().refresh()

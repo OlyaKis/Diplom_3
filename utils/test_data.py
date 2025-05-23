@@ -1,6 +1,8 @@
 import random
 import string
 
+DEFAULT_TEST_USER_NAME = "TestUser"
+
 
 class TestUser:
     def __init__(self, email, password, name):
@@ -13,7 +15,7 @@ class TestUser:
         return TestUser(
             email=generate_email(),
             password=generate_password(),
-            name=generate_name()
+            name=DEFAULT_TEST_USER_NAME
         )
 
 
@@ -23,7 +25,3 @@ def generate_email():
 
 def generate_password():
     return ''.join(random.choices(string.ascii_letters + string.digits, k=10))
-
-
-def generate_name():
-    return "TestUser"

@@ -1,12 +1,20 @@
 import allure
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
+from locators.base_locators import BaseLocators
 
 
 class BasePage:
     def __init__(self, driver):
         self.driver = driver
+
+    @allure.step("Переходим по URL")
+    def go(self, url):
+        self.driver.get(url)
+
+    @allure.step("Обновляем страницу")
+    def refresh(self):
+        self.driver.refresh()
 
     @allure.step("Получаем текущий URL")
     def get_current_url(self):
@@ -14,8 +22,7 @@ class BasePage:
 
     @allure.step("Ищем элемент по локатору")
     def find_element(self, locator, timeout=10):
-        self.wait_for_visible(locator, timeout)
-        return self.driver.find_element(*locator)
+        return self.wait_for_visible(locator, timeout)
 
     @allure.step("Ищем все элементы по локатору")
     def find_elements(self, locator, timeout=10):
@@ -25,8 +32,11 @@ class BasePage:
     @allure.step("Кликаем по элементу")
     def click(self, locator, reason=None, wait_timeout=10):
         self.wait_overlay_invisible(wait_timeout)
-        self.wait_for_clickable(locator, wait_timeout)
-        self.driver.find_element(*locator).click()
+        element = self.wait_for_clickable(locator, wait_timeout)
+        try:
+            element.click()
+        except Exception:
+            self.driver.execute_script("arguments[0].click();", element)
 
     @allure.step("Вводим значение в элемент")
     def send_keys(self, locator, value, timeout=10):
@@ -49,7 +59,7 @@ class BasePage:
     def wait_overlay_invisible(self, timeout=10):
         try:
             WebDriverWait(self.driver, timeout).until(
-                EC.invisibility_of_element_located((By.CLASS_NAME, "Modal_modal_overlay__x2ZCr"))
+                EC.invisibility_of_element_located(BaseLocators.MODAL_OVERLAY)
             )
         except Exception:
             pass
@@ -71,3 +81,7 @@ class BasePage:
         WebDriverWait(self.driver, timeout).until(
             EC.invisibility_of_element_located(locator)
         )
+
+    @allure.step("Выполняем JS-скрипт над элементом")
+    def execute_script(self, script, element):
+        return self.driver.execute_script(script, element)

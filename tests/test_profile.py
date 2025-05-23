@@ -1,6 +1,4 @@
-import pytest
 import allure
-from pages.login_page import LoginPage
 from pages.profile_page import ProfilePage
 from utils.api_helper import create_test_user, delete_test_user
 from utils.test_data import TestUser

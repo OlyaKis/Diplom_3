@@ -7,7 +7,7 @@ class LoginPage(BasePage):
 
     @allure.step("Открываем страницу логина")
     def open(self):
-        self.driver.get("https://stellarburgers.nomoreparties.site/login")
+        self.go("https://stellarburgers.nomoreparties.site/login")
         self.wait_for_visible(LoginLocators.EMAIL_INPUT, timeout=5)
 
     @allure.step("Выполняем логин с email")
@@ -16,9 +16,10 @@ class LoginPage(BasePage):
         self.send_keys(LoginLocators.PASSWORD_INPUT, password)
         self.click(LoginLocators.LOGIN_BUTTON)
 
-    @allure.step("Переходим по ссылке 'Забыли пароль?'")
+    @allure.step("Переходим по ссылке 'Забыли пароль'")
     def click_forgot_password_link(self):
         self.click(LoginLocators.FORGOT_PASSWORD_LINK)
 
+    @allure.step("Проверяем, что страница логина открыта")
     def is_login_opened(self):
         return "login" in self.get_current_url()

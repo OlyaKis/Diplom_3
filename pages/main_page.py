@@ -11,7 +11,7 @@ class MainPage(BasePage):
 
     @allure.step("Открываем главную страницу конструктора бургеров")
     def open(self):
-        self.driver.get(self.URL)
+        self.go(self.URL)
         self.wait_for_load()
 
     @allure.step("Ожидаем загрузки ингредиентов на главной")
@@ -70,7 +70,6 @@ class MainPage(BasePage):
     def drag_first_ingredient_to_constructor(self):
         time.sleep(3)
         ingredients = self.find_elements(MainPageLocators.INGREDIENT_ITEM)
-        print(f"Найдено ингредиентов: {len(ingredients)}")
         if not ingredients:
             raise Exception("Не найдено ни одного ингредиента")
         target = self.find_element(MainPageLocators.INGREDIENTS)
@@ -88,8 +87,8 @@ class MainPage(BasePage):
         close_btn = self.wait_for_clickable(MainPageLocators.CLOSE_BUTTON, timeout)
         try:
             close_btn.click()
-        except Exception as e:
-            self.driver.execute_script("arguments[0].click();", close_btn)
+        except Exception:
+            self.execute_script("arguments[0].click();", close_btn)
         self.wait_for_invisible(MainPageLocators.ORDER_MODAL, timeout)
 
     @allure.step("Перетаскиваем булку в конструктор")
@@ -116,8 +115,8 @@ class MainPage(BasePage):
 
     @allure.step("Закрываем модальное окно")
     def close_modal(self, timeout=5):
-        self.wait_for_clickable(MainPageLocators.CLOSE_BUTTON, timeout)
-        self.find_element(MainPageLocators.CLOSE_BUTTON).click()
+        close_btn = self.wait_for_clickable(MainPageLocators.CLOSE_BUTTON, timeout)
+        close_btn.click()
 
     @allure.step("Ожидаем загрузку ингредиентов")
     def wait_for_ingredients(self, timeout=10):
@@ -133,4 +132,5 @@ class MainPage(BasePage):
 
     @allure.step("Проверяем, что открыт конструктор")
     def is_constructor_opened(self):
-        return self.get_current_url() == self.URL or "/constructor" in self.get_current_url()
+        url = self.get_current_url()
+        return url == self.URL or "/constructor" in url
